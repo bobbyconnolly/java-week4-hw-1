@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building a Pet Care System</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+        margin-top: 2rem;
+      }
+      pre {
+        background: #f8f9fa;
+        border-radius: 4px;
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid #e9ecef;
+        width: calc(100% - 2rem);
+      }
+      .keyword {
+        color: #0033b3;
+      }
+      .string {
+        color: #067d17;
+      }
+      .comment {
+        color: #8c8c8c;
+      }
+      .number {
+        color: #1750eb;
+      }
+      .type {
+        color: #000080;
+      }
+      .tip {
+        background: #e3f2fd;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+      .warning {
+        background: #fff3e0;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Creating a Pet Care Management System! 🏥</h1>
+
+    <p>
+      Our pet shop is growing, and we need a proper system to manage pet care! Different pets need different types of
+      care, and we need to make sure we don't miss anything important.
+    </p>
+
+    <h2>The Challenge 🎯</h2>
+
+    <p>Think about what different pets need:</p>
+    <ul>
+      <li>Dogs need regular walks and grooming</li>
+      <li>Cats need litterbox cleaning and maybe grooming</li>
+      <li>Fish need water quality checks</li>
+      <li>Some pets need special diets or medications</li>
+    </ul>
+
+    <h2>Let's Start with Basic Care! 🌟</h2>
+
+    <p>First, let's create an interface for basic pet care requirements:</p>
+
+    <pre><span class="keyword">public interface</span> CareRequirements {
+    <span class="comment">// Get how often this pet needs feeding (in hours)</span>
+    <span class="keyword">int</span> getFeedingFrequency();
+    
+    <span class="comment">// Feed the pet</span>
+    <span class="keyword">void</span> feed();
+    
+    <span class="comment">// Check if the pet needs immediate care</span>
+    <span class="keyword">boolean</span> needsImmediateCare();
+    
+    <span class="comment">// A default method for basic care check</span>
+    <span class="keyword">default void</span> performBasicCareCheck() {
+        System.out.println(<span class="string">"Performing basic care check..."</span>);
+        <span class="keyword">if</span> (needsImmediateCare()) {
+            System.out.println(<span class="string">"⚠️ Pet needs attention!"</span>);
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"✅ Pet is doing fine!"</span>);
+        }
+    }
+}</pre>
+
+    <div class="tip">
+      <strong>Notice:</strong> We've included a default method that all implementing classes can use! They can also
+      override it if they need special behavior. 🔧
+    </div>
+
+    <h2>Special Care Requirements! ⭐</h2>
+
+    <p>Some pets need extra special care. Let's create another interface for that:</p>
+
+    <pre><span class="keyword">public interface</span> SpecialCare {
+    <span class="comment">// Get any special dietary requirements</span>
+    String getDietaryRestrictions();
+    
+    <span class="comment">// Get medical needs (medications, etc.)</span>
+    List&lt;String&gt; getMedicalNeeds();
+    
+    <span class="comment">// Check if pet has special needs</span>
+    <span class="keyword">default boolean</span> hasSpecialNeeds() {
+        <span class="keyword">return</span> !getDietaryRestrictions().isEmpty() || 
+               !getMedicalNeeds().isEmpty();
+    }
+}</pre>
+
+    <h2>Let's Implement These! 💪</h2>
+
+    <p>Try implementing these interfaces in your Dog class:</p>
+
+    <pre><span class="keyword">public class</span> Dog <span class="keyword">extends</span> Pet 
+    <span class="keyword">implements</span> CareRequirements, SpecialCare {
+    
+    <span class="keyword">private</span> List&lt;String&gt; medicalNeeds = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    <span class="keyword">private</span> String dietRestrictions = <span class="string">""</span>;
+    <span class="keyword">private</span> LocalDateTime lastFed;
+    
+    <span class="comment">// TODO: Implement all required methods!
+    // The compiler will tell you what you're missing! 🔍</span>
+}</pre>
+
+    <div class="warning">
+      <strong>Try This:</strong> Add the implements clause but don't add any methods yet. What does the compiler tell
+      you? How can this help guide our implementation? 🤔
+    </div>
+
+    <h2>Your First Task: Basic Implementation</h2>
+
+    <p>Complete these steps:</p>
+    <ol>
+      <li>Add the interface implementations to Dog</li>
+      <li>Let the compiler errors guide you to add required methods</li>
+      <li>Add a way to track when the pet was last fed</li>
+      <li>Implement special needs tracking</li>
+    </ol>
+
+    <pre><span class="comment">// Example testing code
+public static void</span> main(String[] args) {
+    Dog buddy = <span class="keyword">new</span> Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>);
+    
+    <span class="comment">// Try basic care</span>
+    System.out.println(<span class="string">"Feeding frequency: "</span> + 
+        buddy.getFeedingFrequency() + <span class="string">" hours"</span>);
+    buddy.feed();
+    
+    <span class="comment">// Check special needs</span>
+    System.out.println(<span class="string">"Has special needs? "</span> + 
+        buddy.hasSpecialNeeds());
+}</pre>
+
+    <div class="tip">
+      <strong>Remember:</strong> The compiler is your friend! Let it guide you to a complete and correct implementation.
+      🌟
+    </div>
+
+    <h2>Different Pets, Different Needs! 🐾</h2>
+
+    <p>Now that we have our basic care interfaces, let's implement them for different pets!</p>
+
+    <h3>Implementing Cat Care 🐱</h3>
+
+    <pre><span class="keyword">public class</span> Cat <span class="keyword">extends</span> Pet 
+    <span class="keyword">implements</span> CareRequirements, SpecialCare {
+    
+    <span class="keyword">private</span> LocalDateTime lastFed;
+    <span class="keyword">private</span> LocalDateTime litterboxCleaned;
+    <span class="keyword">private</span> List&lt;String&gt; medicalNeeds = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    <span class="keyword">private</span> String dietRestrictions = <span class="string">""</span>;
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public int</span> getFeedingFrequency() {
+        <span class="keyword">return</span> <span class="number">8</span>;  <span class="comment">// Cats need feeding every 8 hours</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> feed() {
+        lastFed = LocalDateTime.now();
+        System.out.println(getName() + <span class="string">" eats daintily..."</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public boolean</span> needsImmediateCare() {
+        <span class="keyword">return</span> needsFeeding() || needsLitterboxCleaning();
+    }
+
+    <span class="keyword">private boolean</span> needsLitterboxCleaning() {
+        <span class="keyword">if</span> (litterboxCleaned == <span class="keyword">null</span>) <span class="keyword">return true</span>;
+        <span class="keyword">return</span> ChronoUnit.HOURS.between(litterboxCleaned, 
+            LocalDateTime.now()) >= <span class="number">24</span>;
+    }
+
+    <span class="keyword">public void</span> cleanLitterbox() {
+        litterboxCleaned = LocalDateTime.now();
+        System.out.println(<span class="string">"Litterbox cleaned for "</span> + getName());
+    }
+
+    <span class="comment">// ... implement other required methods ...</span>
+}</pre>
+
+    <h3>Fish Care Requirements 🐠</h3>
+
+    <pre><span class="keyword">public class</span> Fish <span class="keyword">extends</span> Pet 
+    <span class="keyword">implements</span> CareRequirements, SpecialCare {
+    
+    <span class="keyword">private</span> LocalDateTime lastFed;
+    <span class="keyword">private</span> LocalDateTime lastWaterCheck;
+    <span class="keyword">private</span> WaterQuality waterQuality = WaterQuality.GOOD;
+    
+    <span class="keyword">private enum</span> WaterQuality {
+        GOOD, OKAY, NEEDS_CHANGE
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public boolean</span> needsImmediateCare() {
+        <span class="keyword">return</span> needsFeeding() || waterQuality == WaterQuality.NEEDS_CHANGE;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> performBasicCareCheck() {
+        System.out.println(<span class="string">"Checking water quality for "</span> + getName());
+        <span class="keyword">if</span> (waterQuality == WaterQuality.NEEDS_CHANGE) {
+            System.out.println(<span class="string">"⚠️ Water needs changing!"</span>);
+        }
+        <span class="keyword">super</span>.performBasicCareCheck();
+    }
+
+    <span class="keyword">public void</span> checkWaterQuality() {
+        lastWaterCheck = LocalDateTime.now();
+        <span class="comment">// Simulate water quality deterioration over time</span>
+        <span class="keyword">long</span> hoursSinceLastChange = ChronoUnit.HOURS.between(
+            lastWaterCheck, LocalDateTime.now());
+        
+        <span class="keyword">if</span> (hoursSinceLastChange > <span class="number">72</span>) {
+            waterQuality = WaterQuality.NEEDS_CHANGE;
+        } <span class="keyword">else if</span> (hoursSinceLastChange > <span class="number">48</span>) {
+            waterQuality = WaterQuality.OKAY;
+        }
+    }
+}</pre>
+
+    <div class="tip">
+      <strong>Notice:</strong> Each pet type implements the same interfaces differently:
+      <ul>
+        <li>Cats need litterbox cleaning</li>
+        <li>Fish need water quality checks</li>
+        <li>Each has unique care requirements!</li>
+      </ul>
+    </div>
+
+    <h2>Creating Care Schedules 📅</h2>
+
+    <p>Let's create a system to manage care schedules:</p>
+
+    <pre><span class="keyword">public class</span> CareSchedule {
+    <span class="keyword">private</span> Pet pet;
+    <span class="keyword">private</span> LocalDateTime nextFeedingTime;
+    <span class="keyword">private</span> List&lt;String&gt; specialCareNotes = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="keyword">public</span> CareSchedule(Pet pet) {
+        <span class="comment">// The compiler will help us here!</span>
+        <span class="keyword">if</span> (!(pet <span class="keyword">instanceof</span> CareRequirements)) {
+            <span class="keyword">throw new</span> IllegalArgumentException(
+                <span class="string">"Pet must implement CareRequirements!"</span>);
+        }
+        
+        <span class="keyword">this</span>.pet = pet;
+        updateNextFeedingTime();
+    }
+
+    <span class="keyword">public void</span> updateNextFeedingTime() {
+        CareRequirements care = (CareRequirements) pet;
+        nextFeedingTime = LocalDateTime.now().plusHours(
+            care.getFeedingFrequency());
+    }
+
+    <span class="keyword">public boolean</span> needsFeeding() {
+        <span class="keyword">return</span> LocalDateTime.now().isAfter(nextFeedingTime);
+    }
+
+    <span class="keyword">public void</span> addSpecialCareNote(String note) {
+        specialCareNotes.add(note);
+    }
+}</pre>
+
+    <h2>Your Tasks 📝</h2>
+
+    <ol>
+      <li>
+        Complete the Fish class:
+        <ul>
+          <li>Add water change scheduling</li>
+          <li>Implement feeding schedule</li>
+          <li>Add water quality monitoring</li>
+        </ul>
+      </li>
+      <li>
+        Enhance CareSchedule:
+        <ul>
+          <li>Add special care tracking</li>
+          <li>Create care history</li>
+          <li>Add urgent care alerts</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="warning">
+      <strong>Remember:</strong> Let the compiler guide you! If you're not sure what methods you need, try using an
+      interface and see what the compiler says is missing! 🔍
+    </div>
+
+    <h2>Building the Care Management System! 🏥</h2>
+
+    <p>Now let's create a complete system to manage all our pet care needs!</p>
+
+    <pre><span class="keyword">public class</span> PetCareSystem {
+    <span class="keyword">private</span> Map&lt;Pet, CareSchedule&gt; careSchedules = <span class="keyword">new</span> HashMap&lt;&gt;();
+    <span class="keyword">private</span> Map&lt;Pet, List&lt;String&gt;&gt; careHistory = <span class="keyword">new</span> HashMap&lt;&gt;();
+    <span class="keyword">private</span> List&lt;Pet&gt; urgentCare = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="keyword">public void</span> registerPet(Pet pet) {
+        <span class="comment">// Let the compiler ensure we only register pets we can care for</span>
+        <span class="keyword">if</span> (!(pet <span class="keyword">instanceof</span> CareRequirements)) {
+            <span class="keyword">throw new</span> IllegalArgumentException(
+                <span class="string">"Cannot register pet without care requirements!"</span>);
+        }
+
+        careSchedules.put(pet, <span class="keyword">new</span> CareSchedule(pet));
+        careHistory.put(pet, <span class="keyword">new</span> ArrayList&lt;&gt;());
+        
+        <span class="comment">// Check for special needs</span>
+        <span class="keyword">if</span> (pet <span class="keyword">instanceof</span> SpecialCare) {
+            SpecialCare specialPet = (SpecialCare) pet;
+            <span class="keyword">if</span> (specialPet.hasSpecialNeeds()) {
+                logCareEvent(pet, <span class="string">"⚠️ Registered with special needs: "</span> + 
+                    specialPet.getDietaryRestrictions());
+            }
+        }
+    }
+
+    <span class="keyword">public void</span> checkAllPets() {
+        System.out.println(<span class="string">"\n🔍 Checking all pets..."</span>);
+        urgentCare.clear();
+        
+        <span class="keyword">for</span> (Pet pet : careSchedules.keySet()) {
+            CareRequirements care = (CareRequirements) pet;
+            
+            <span class="keyword">if</span> (care.needsImmediateCare()) {
+                urgentCare.add(pet);
+                logCareEvent(pet, <span class="string">"⚠️ Needs immediate care!"</span>);
+            }
+            
+            <span class="comment">// Check feeding schedule</span>
+            CareSchedule schedule = careSchedules.get(pet);
+            <span class="keyword">if</span> (schedule.needsFeeding()) {
+                logCareEvent(pet, <span class="string">"🍽️ Feeding time!"</span>);
+                care.feed();
+                schedule.updateNextFeedingTime();
+            }
+        }
+    }
+
+    <span class="keyword">private void</span> logCareEvent(Pet pet, String event) {
+        String timestamp = LocalDateTime.now().format(
+            DateTimeFormatter.ofPattern(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>));
+        String logEntry = timestamp + <span class="string">": "</span> + event;
+        careHistory.get(pet).add(logEntry);
+    }
+
+    <span class="keyword">public void</span> generateCareReport(Pet pet) {
+        System.out.println(<span class="string">"\n📋 Care Report for "</span> + pet.getName());
+        System.out.println(<span class="string">"=================="</span>);
+        
+        <span class="keyword">if</span> (pet <span class="keyword">instanceof</span> SpecialCare) {
+            SpecialCare specialPet = (SpecialCare) pet;
+            System.out.println(<span class="string">"\nSpecial Care Needs:"</span>);
+            System.out.println(<span class="string">"- Diet: "</span> + specialPet.getDietaryRestrictions());
+            System.out.println(<span class="string">"- Medical: "</span> + specialPet.getMedicalNeeds());
+        }
+        
+        System.out.println(<span class="string">"\nCare History:"</span>);
+        List&lt;String&gt; history = careHistory.get(pet);
+        <span class="keyword">for</span> (String event : history) {
+            System.out.println(event);
+        }
+    }
+}</pre>
+
+    <h2>Testing the System! 🧪</h2>
+
+    <pre><span class="keyword">public static void</span> main(String[] args) {
+    PetCareSystem careSystem = <span class="keyword">new</span> PetCareSystem();
+
+    <span class="comment">// Create pets with different needs</span>
+    Dog buddy = <span class="keyword">new</span> Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>);
+    Cat whiskers = <span class="keyword">new</span> Cat(<span class="string">"Whiskers"</span>, <span class="number">5</span>);
+    Fish nemo = <span class="keyword">new</span> Fish(<span class="string">"Nemo"</span>, <span class="number">1</span>, WaterType.SALTWATER);
+
+    <span class="comment">// Register all pets</span>
+    careSystem.registerPet(buddy);
+    careSystem.registerPet(whiskers);
+    careSystem.registerPet(nemo);
+
+    <span class="comment">// Run some care cycles</span>
+    careSystem.checkAllPets();
+    
+    <span class="comment">// Generate reports</span>
+    careSystem.generateCareReport(buddy);
+    careSystem.generateCareReport(whiskers);
+    careSystem.generateCareReport(nemo);
+}</pre>
+
+    <h2>Final Challenge: Enhanced Pet Care System! 🏆</h2>
+
+    <p>Extend the system with these features:</p>
+
+    <ol>
+      <li>
+        Create a MedicalCare interface:
+        <ul>
+          <li>Track vaccinations</li>
+          <li>Schedule checkups</li>
+          <li>Monitor chronic conditions</li>
+        </ul>
+      </li>
+      <li>
+        Add an ExerciseNeeds interface:
+        <ul>
+          <li>Different exercise requirements per pet type</li>
+          <li>Track exercise completion</li>
+          <li>Monitor energy levels</li>
+        </ul>
+      </li>
+      <li>
+        Implement a care optimization system:
+        <ul>
+          <li>Suggest optimal care schedules</li>
+          <li>Group similar care tasks</li>
+          <li>Prioritize urgent care needs</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="warning">
+      <strong>Implementation Tips:</strong>
+      <ul>
+        <li>Start with interface definitions</li>
+        <li>Let compiler errors guide your implementation</li>
+        <li>Test each feature thoroughly</li>
+        <li>Consider edge cases!</li>
+      </ul>
+    </div>
+
+    <h2>Bonus Challenge: Care Schedule Optimization 🎯</h2>
+
+    <p>Create a system that:</p>
+    <ul>
+      <li>Groups similar care tasks together</li>
+      <li>Minimizes time between urgent care needs</li>
+      <li>Balances care provider workload</li>
+      <li>Generates efficient daily schedules</li>
+    </ul>
+
+    <div class="tip">
+      <strong>Remember:</strong> The compiler is your friend! Use interfaces and type checking to ensure your system
+      remains robust as it grows more complex! 🛡️
+    </div>
+
+    <p>Good luck! Remember to commit your code regularly and test each feature as you implement it! 🚀</p>
+  </body>
+</html>
